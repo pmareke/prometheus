@@ -1,0 +1,21 @@
+version: '2'
+services:
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - prometheus
+      - grafana
+  prometheus:
+    image: bitnami/prometheus
+    volumes:
+      - .:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+  grafana:
+    image: bitnami/grafana
+    ports:
+      - "3000:3000"
